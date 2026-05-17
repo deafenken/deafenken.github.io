@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Longkun Shi</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #fff;
+      color: #1a1a1a;
+      line-height: 1.65;
+      font-size: 16px;
+    }
+
+    .page {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+
+    /* ── PROFILE ── */
+    .profile {
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+      margin-bottom: 52px;
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: #f0f0f0;
+    }
+
+    .profile-info h1 {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .zh { font-size: 18px; font-weight: 400; color: #777; margin-left: 8px; }
+
+    .affil {
+      margin-top: 6px;
+      font-size: 14px;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .links {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      color: #2563eb;
+      text-decoration: none;
+      border: 1px solid #bfdbfe;
+      border-radius: 5px;
+      padding: 4px 11px;
+      transition: background .12s;
+    }
+
+    .links a:hover { background: #eff6ff; }
+
+    /* ── SECTIONS ── */
+    section { margin-bottom: 44px; }
+
+    section h2 {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: #999;
+      margin-bottom: 18px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #eee;
+    }
+
+    /* ── ABOUT ── */
+    .about p { font-size: 15px; color: #333; line-height: 1.75; }
+
+    /* ── PAPERS ── */
+    .paper {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .paper-badge {
+      flex-shrink: 0;
+      margin-top: 3px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      background: #2563eb;
+      border-radius: 4px;
+      padding: 3px 9px;
+      height: fit-content;
+      white-space: nowrap;
+    }
+
+    .paper-badge.conf { background: #7c3aed; }
+
+    .paper-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #111;
+      line-height: 1.4;
+    }
+
+    .paper-authors {
+      font-size: 13.5px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .paper-authors strong { color: #1a1a1a; font-weight: 600; }
+
+    .paper-venue {
+      font-size: 13px;
+      color: #888;
+      margin-top: 3px;
+    }
+
+    .paper-venue .ccf { color: #dc2626; font-weight: 600; }
+
+    .paper-metrics {
+      margin-top: 7px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 3px;
+      background: #f3f4f6;
+      color: #555;
+    }
+
+    .tag.gold {
+      background: #fef9c3;
+      color: #854d0e;
+      font-weight: 600;
+    }
+
+    .paper-links { margin-top: 7px; display: flex; gap: 12px; }
+
+    .paper-links a {
+      font-size: 12.5px;
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    .paper-links a:hover { text-decoration: underline; }
+
+    /* ── AWARDS ── */
+    .award-row {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      padding: 9px 0;
+      border-bottom: 1px solid #f4f4f4;
+      font-size: 14px;
+    }
+
+    .award-row:last-child { border-bottom: none; }
+
+    .award-date { width: 60px; flex-shrink: 0; font-size: 12.5px; color: #aaa; }
+    .award-name { flex: 1; color: #333; }
+    .award-level { font-size: 12.5px; font-weight: 600; color: #2563eb; white-space: nowrap; }
+
+    /* ── EDUCATION ── */
+    .edu {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .edu-school { font-weight: 600; font-size: 15px; }
+    .edu-detail { font-size: 13.5px; color: #666; margin-top: 3px; }
+    .edu-year { font-size: 13px; color: #aaa; white-space: nowrap; }
+
+    /* ── FOOTER ── */
+    footer {
+      margin-top: 64px;
+      text-align: center;
+      font-size: 12px;
+      color: #ccc;
+    }
+
+    @media (max-width: 520px) {
+      .profile { flex-direction: column; align-items: center; text-align: center; }
+      .links { justify-content: center; }
+      .paper { flex-direction: column; gap: 8px; }
+      .edu { flex-direction: column; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- PROFILE -->
+  <div class="profile">
+    <img class="avatar" src="assets/photo.jpg" alt="Longkun Shi"
+         onerror="this.style.background='#e5e7eb'">
+    <div class="profile-info">
+      <h1>Longkun Shi <span class="zh">史龙堃</span></h1>
+      <p class="affil">
+        B.Eng. Candidate &nbsp;·&nbsp; School of Computer Science and Technology<br>
+        Xinjiang University &nbsp;·&nbsp; Urumqi, China
+      </p>
+      <div class="links">
+        <a href="mailto:18203913583@163.com">
+          <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+          </svg>
+          Email
+        </a>
+        <a href="https://github.com/deafenken" target="_blank">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+        <a href="https://github.com/deafenken/UAPA-HCF" target="_blank">
+          <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/>
+          </svg>
+          UAPA-HCF Code
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about">
+    <h2>About</h2>
+    <p>
+      I am a third-year undergraduate at Xinjiang University (Class of 2027), ranked 9<sup>th</sup> out of 120
+      (GPA 4.12/5.0). My research centers on <strong>weakly supervised video anomaly detection</strong> and
+      <strong>multimodal video understanding</strong> — specifically how to align heterogeneous modalities
+      (RGB, audio, optical flow) under coarse video-level supervision. I am actively seeking graduate
+      opportunities for Fall 2026.
+    </p>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section>
+    <h2>Publications</h2>
+
+    <div class="paper">
+      <span class="paper-badge">ICMR '26</span>
+      <div>
+        <div class="paper-title">
+          Rectifying Multimodal Variance: UAPA-HCF for Weakly Supervised Violence Detection
+        </div>
+        <div class="paper-authors">
+          <strong>Longkun Shi</strong>, Hanlin Hu, Haoze Zheng, Yuanyuan Liao, Turdi Tohti
+        </div>
+        <div class="paper-venue">
+          ACM International Conference on Multimedia Retrieval, Amsterdam, Jun 2026 &nbsp;·&nbsp;
+          <span class="ccf">CCF-B</span>
+        </div>
+        <div class="paper-metrics">
+          <span class="tag gold">87.65% AP · XD-Violence (SOTA)</span>
+          <span class="tag">Weakly Supervised</span>
+          <span class="tag">RGB + Audio + Optical Flow</span>
+        </div>
+        <div class="paper-links">
+          <a href="https://doi.org/10.1145/3805622.3810882">DOI</a>
+          <a href="https://github.com/deafenken/UAPA-HCF">Code</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="paper">
+      <span class="paper-badge conf">CXCC '25</span>
+      <div>
+        <!-- TODO: replace with full English title -->
+        <div class="paper-title">JAIN-MF: [Full title — please fill in]</div>
+        <div class="paper-authors"><strong>Longkun Shi</strong>, et al.</div>
+        <div class="paper-venue">
+          China Collegiate Computing Competition, AI Practice Track, 2025
+        </div>
+        <div class="paper-metrics">
+          <span class="tag gold">91.4% Top-1 · NTU RGB+D 120</span>
+          <span class="tag">Action Recognition</span>
+          <span class="tag">Skeleton + RGB + Optical Flow</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AWARDS -->
+  <section>
+    <h2>Selected Awards</h2>
+    <div class="award-row">
+      <span class="award-date">2025-08</span>
+      <span class="award-name">China Collegiate Computing Competition — AI Practice Track</span>
+      <span class="award-level">National 3rd Prize</span>
+    </div>
+    <div class="award-row">
+      <span class="award-date">2025-03</span>
+      <span class="award-name">Huawei ICT Competition · China National Final (9th edition)</span>
+      <span class="award-level">National 2nd Prize</span>
+    </div>
+    <div class="award-row">
+      <span class="award-date">2024-10</span>
+      <span class="award-name">China International College Students' Innovation Competition</span>
+      <span class="award-level">National Bronze</span>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section>
+    <h2>Education</h2>
+    <div class="edu">
+      <div>
+        <div class="edu-school">Xinjiang University</div>
+        <div class="edu-detail">
+          B.Eng. Computer Science and Technology &nbsp;·&nbsp;
+          GPA 4.12 / 5.0 &nbsp;·&nbsp; Rank 9 / 120
+        </div>
+      </div>
+      <div class="edu-year">Sep 2023 – Jun 2027</div>
+    </div>
+  </section>
+
+  <footer>Last updated May 2026</footer>
+
+</div>
+</body>
+</html>
