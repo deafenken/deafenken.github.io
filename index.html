@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Longkun Shi</title>
+  <title>Longkun Shi · 史龙堃</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -18,8 +18,50 @@
     .page {
       max-width: 760px;
       margin: 0 auto;
-      padding: 60px 24px 80px;
+      padding: 52px 24px 80px;
     }
+
+    /* ── LANG SWITCH ── */
+    .lang-bar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 36px;
+      gap: 2px;
+    }
+
+    .lang-btn {
+      background: none;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #888;
+      padding: 3px 10px;
+      cursor: pointer;
+      transition: all .12s;
+    }
+
+    .lang-btn.active {
+      background: #1a1a1a;
+      border-color: #1a1a1a;
+      color: #fff;
+    }
+
+    .lang-btn:not(.active):hover {
+      border-color: #999;
+      color: #444;
+    }
+
+    /* ── LANG VISIBILITY ── */
+    .en { display: block; }
+    .zh { display: none; }
+    body.zh-mode .en { display: none; }
+    body.zh-mode .zh { display: block; }
+
+    /* inline spans */
+    span.en, span.zh { display: inline; }
+    body.zh-mode span.en { display: none; }
+    body.zh-mode span.zh { display: inline; }
 
     /* ── PROFILE ── */
     .profile {
@@ -44,13 +86,13 @@
       line-height: 1.2;
     }
 
-    .zh { font-size: 18px; font-weight: 400; color: #777; margin-left: 8px; }
+    .sub-name { font-size: 18px; font-weight: 400; color: #888; margin-left: 8px; }
 
     .affil {
       margin-top: 6px;
       font-size: 14px;
       color: #555;
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
     .links {
@@ -114,27 +156,10 @@
 
     .paper-badge.conf { background: #7c3aed; }
 
-    .paper-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: #111;
-      line-height: 1.4;
-    }
-
-    .paper-authors {
-      font-size: 13.5px;
-      color: #666;
-      margin-top: 4px;
-    }
-
+    .paper-title { font-size: 15px; font-weight: 600; color: #111; line-height: 1.4; }
+    .paper-authors { font-size: 13.5px; color: #666; margin-top: 4px; }
     .paper-authors strong { color: #1a1a1a; font-weight: 600; }
-
-    .paper-venue {
-      font-size: 13px;
-      color: #888;
-      margin-top: 3px;
-    }
-
+    .paper-venue { font-size: 13px; color: #888; margin-top: 3px; }
     .paper-venue .ccf { color: #dc2626; font-weight: 600; }
 
     .paper-metrics {
@@ -152,20 +177,10 @@
       color: #555;
     }
 
-    .tag.gold {
-      background: #fef9c3;
-      color: #854d0e;
-      font-weight: 600;
-    }
+    .tag.gold { background: #fef9c3; color: #854d0e; font-weight: 600; }
 
     .paper-links { margin-top: 7px; display: flex; gap: 12px; }
-
-    .paper-links a {
-      font-size: 12.5px;
-      color: #2563eb;
-      text-decoration: none;
-    }
-
+    .paper-links a { font-size: 12.5px; color: #2563eb; text-decoration: none; }
     .paper-links a:hover { text-decoration: underline; }
 
     /* ── AWARDS ── */
@@ -179,29 +194,18 @@
     }
 
     .award-row:last-child { border-bottom: none; }
-
     .award-date { width: 60px; flex-shrink: 0; font-size: 12.5px; color: #aaa; }
     .award-name { flex: 1; color: #333; }
     .award-level { font-size: 12.5px; font-weight: 600; color: #2563eb; white-space: nowrap; }
 
     /* ── EDUCATION ── */
-    .edu {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
-
+    .edu { display: flex; justify-content: space-between; align-items: flex-start; }
     .edu-school { font-weight: 600; font-size: 15px; }
     .edu-detail { font-size: 13.5px; color: #666; margin-top: 3px; }
     .edu-year { font-size: 13px; color: #aaa; white-space: nowrap; }
 
     /* ── FOOTER ── */
-    footer {
-      margin-top: 64px;
-      text-align: center;
-      font-size: 12px;
-      color: #ccc;
-    }
+    footer { margin-top: 64px; text-align: center; font-size: 12px; color: #ccc; }
 
     @media (max-width: 520px) {
       .profile { flex-direction: column; align-items: center; text-align: center; }
@@ -214,15 +218,24 @@
 <body>
 <div class="page">
 
+  <!-- LANG SWITCH -->
+  <div class="lang-bar">
+    <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" id="btn-zh" onclick="setLang('zh')">中文</button>
+  </div>
+
   <!-- PROFILE -->
   <div class="profile">
     <img class="avatar" src="assets/photo.jpg" alt="Longkun Shi"
          onerror="this.style.background='#e5e7eb'">
     <div class="profile-info">
-      <h1>Longkun Shi <span class="zh">史龙堃</span></h1>
+      <h1>
+        <span class="en">Longkun Shi <span class="sub-name">史龙堃</span></span>
+        <span class="zh">史龙堃 <span class="sub-name">Longkun Shi</span></span>
+      </h1>
       <p class="affil">
-        B.Eng. Candidate &nbsp;·&nbsp; School of Computer Science and Technology<br>
-        Xinjiang University &nbsp;·&nbsp; Urumqi, China
+        <span class="en">B.Eng. Candidate &nbsp;·&nbsp; School of Computer Science and Technology<br>Xinjiang University &nbsp;·&nbsp; Urumqi, China</span>
+        <span class="zh">本科生 &nbsp;·&nbsp; 计算机科学与技术学院<br>新疆大学 &nbsp;·&nbsp; 新疆乌鲁木齐</span>
       </p>
       <div class="links">
         <a href="mailto:18203913583@163.com">
@@ -250,56 +263,68 @@
 
   <!-- ABOUT -->
   <section class="about">
-    <h2>About</h2>
-    <p>
+    <h2><span class="en">About</span><span class="zh">关于</span></h2>
+    <p class="en">
       I am a third-year undergraduate at Xinjiang University (Class of 2027), ranked 9<sup>th</sup> out of 120
-      (GPA 4.12/5.0). My research centers on <strong>weakly supervised video anomaly detection</strong> and
-      <strong>multimodal video understanding</strong> — specifically how to align heterogeneous modalities
-      (RGB, audio, optical flow) under coarse video-level supervision. I am actively seeking graduate
-      opportunities for Fall 2026.
+      in my major (GPA 4.12/5.0) and 2<sup>nd</sup> out of 120 in overall assessment. My research centers on
+      <strong>weakly supervised video anomaly detection</strong> and <strong>multimodal video understanding</strong>
+      — specifically how to align heterogeneous modalities (RGB, audio, optical flow) under coarse video-level
+      supervision. I am actively seeking graduate opportunities for Fall 2026.
+    </p>
+    <p class="zh">
+      我是新疆大学计算机科学与技术学院 2027 届本科生，专业排名 9/120（前 7.5%），综合测评排名 2/120，GPA 4.12/5.0。
+      研究方向为<strong>弱监督视频异常检测</strong>与<strong>多模态视频理解</strong>，专注于在粗粒度视频级监督下
+      对齐异构模态（RGB、音频、光流）。目前正积极寻求 2026 年秋季的攻读研究生机会。
     </p>
   </section>
 
   <!-- PUBLICATIONS -->
   <section>
-    <h2>Publications</h2>
+    <h2><span class="en">Publications</span><span class="zh">论文</span></h2>
 
+    <!-- ICMR -->
     <div class="paper">
       <span class="paper-badge">ICMR '26</span>
       <div>
         <div class="paper-title">
-          Rectifying Multimodal Variance: UAPA-HCF for Weakly Supervised Violence Detection
+          <span class="en">Rectifying Multimodal Variance: UAPA-HCF for Weakly Supervised Violence Detection</span>
+          <span class="zh">修正多模态方差：基于 UAPA-HCF 的弱监督视频暴力检测</span>
         </div>
         <div class="paper-authors">
           <strong>Longkun Shi</strong>, Hanlin Hu, Haoze Zheng, Yuanyuan Liao, Turdi Tohti
         </div>
         <div class="paper-venue">
-          ACM International Conference on Multimedia Retrieval, Amsterdam, Jun 2026 &nbsp;·&nbsp;
-          <span class="ccf">CCF-B</span>
+          <span class="en"><em>ACM International Conference on Multimedia Retrieval</em>, Amsterdam, Jun 2026 &nbsp;·&nbsp; <span class="ccf">CCF-B</span></span>
+          <span class="zh"><em>ACM 国际多媒体检索大会（ICMR '26）</em>，阿姆斯特丹 &nbsp;·&nbsp; <span class="ccf">CCF-B</span></span>
         </div>
         <div class="paper-metrics">
-          <span class="tag gold">87.65% AP · XD-Violence (SOTA)</span>
-          <span class="tag">Weakly Supervised</span>
+          <span class="tag gold">87.65% AP · XD-Violence</span>
+          <span class="tag"><span class="en">Weakly Supervised</span><span class="zh">弱监督</span></span>
           <span class="tag">RGB + Audio + Optical Flow</span>
         </div>
         <div class="paper-links">
           <a href="https://doi.org/10.1145/3805622.3810882">DOI</a>
-          <a href="https://github.com/deafenken/UAPA-HCF">Code</a>
+          <a href="https://github.com/deafenken/UAPA-HCF"><span class="en">Code</span><span class="zh">代码</span></a>
         </div>
       </div>
     </div>
 
+    <!-- CXCC -->
     <div class="paper">
       <span class="paper-badge conf">CXCC '25</span>
       <div>
-        <div class="paper-title">JAIN-MF: Multi-Modal Action Recognition via Skeleton-Guided Sparse Subspace Alignment</div>
+        <div class="paper-title">
+          <span class="en">JAIN-MF: Multi-Modal Action Recognition via Skeleton-Guided Sparse Subspace Alignment</span>
+          <span class="zh">JAIN-MF：基于骨架引导稀疏子空间对齐的多模态动作识别</span>
+        </div>
         <div class="paper-authors"><strong>Longkun Shi</strong>, et al.</div>
         <div class="paper-venue">
-          China Collegiate Computing Competition, AI Practice Track, 2025
+          <span class="en"><em>China Collegiate Computing Competition</em>, AI Practice Track, 2025</span>
+          <span class="zh"><em>中国大学生计算机大赛·人工智能创新赛</em>，2025</span>
         </div>
         <div class="paper-metrics">
           <span class="tag gold">91.4% Top-1 · NTU RGB+D 120</span>
-          <span class="tag">Action Recognition</span>
+          <span class="tag"><span class="en">Action Recognition</span><span class="zh">动作识别</span></span>
           <span class="tag">Skeleton + RGB + Optical Flow</span>
         </div>
       </div>
@@ -308,41 +333,73 @@
 
   <!-- AWARDS -->
   <section>
-    <h2>Selected Awards</h2>
+    <h2><span class="en">Selected Awards</span><span class="zh">获奖情况</span></h2>
     <div class="award-row">
       <span class="award-date">2025-08</span>
-      <span class="award-name">China Collegiate Computing Competition — AI Practice Track</span>
-      <span class="award-level">National 3rd Prize</span>
+      <span class="award-name">
+        <span class="en">China Collegiate Computing Competition — AI Practice Track</span>
+        <span class="zh">中国大学生计算机大赛·人工智能创新赛</span>
+      </span>
+      <span class="award-level"><span class="en">National 3rd Prize</span><span class="zh">全国三等奖</span></span>
     </div>
     <div class="award-row">
       <span class="award-date">2025-03</span>
-      <span class="award-name">Huawei ICT Competition · China National Final (9th edition)</span>
-      <span class="award-level">National 2nd Prize</span>
+      <span class="award-name">
+        <span class="en">Huawei ICT Competition · China National Final (9th)</span>
+        <span class="zh">华为 ICT 大赛·中国区总决赛（第九届）</span>
+      </span>
+      <span class="award-level"><span class="en">National 2nd Prize</span><span class="zh">全国二等奖</span></span>
     </div>
     <div class="award-row">
       <span class="award-date">2024-10</span>
-      <span class="award-name">China International College Students' Innovation Competition</span>
-      <span class="award-level">National Bronze</span>
+      <span class="award-name">
+        <span class="en">China International College Students' Innovation Competition</span>
+        <span class="zh">中国国际大学生创新大赛</span>
+      </span>
+      <span class="award-level"><span class="en">National Bronze</span><span class="zh">全国铜奖</span></span>
     </div>
   </section>
 
   <!-- EDUCATION -->
   <section>
-    <h2>Education</h2>
+    <h2><span class="en">Education</span><span class="zh">教育经历</span></h2>
     <div class="edu">
       <div>
-        <div class="edu-school">Xinjiang University</div>
+        <div class="edu-school">
+          <span class="en">Xinjiang University</span>
+          <span class="zh">新疆大学</span>
+        </div>
         <div class="edu-detail">
-          B.Eng. Computer Science and Technology &nbsp;·&nbsp;
-          GPA 4.12 / 5.0 &nbsp;·&nbsp; Major Rank 9 / 120 &nbsp;·&nbsp; Overall Rank 2 / 120
+          <span class="en">B.Eng. Computer Science and Technology &nbsp;·&nbsp; GPA 4.12 / 5.0 &nbsp;·&nbsp; Major Rank 9 / 120 &nbsp;·&nbsp; Overall Rank 2 / 120</span>
+          <span class="zh">计算机科学与技术 &nbsp;·&nbsp; GPA 4.12 / 5.0 &nbsp;·&nbsp; 专业排名 9 / 120 &nbsp;·&nbsp; 综测排名 2 / 120</span>
         </div>
       </div>
-      <div class="edu-year">Sep 2023 – Jun 2027</div>
+      <div class="edu-year">
+        <span class="en">Sep 2023 – Jun 2027</span>
+        <span class="zh">2023.09 — 2027.06</span>
+      </div>
     </div>
   </section>
 
-  <footer>Last updated May 2026</footer>
+  <footer>
+    <span class="en">Last updated May 2026</span>
+    <span class="zh">最后更新：2026 年 5 月</span>
+  </footer>
 
 </div>
+
+<script>
+  function setLang(lang) {
+    document.body.classList.toggle('zh-mode', lang === 'zh');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    try { localStorage.setItem('lang', lang); } catch(e) {}
+  }
+  try {
+    const saved = localStorage.getItem('lang');
+    if (saved === 'zh') setLang('zh');
+  } catch(e) {}
+</script>
 </body>
 </html>
