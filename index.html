@@ -5,401 +5,699 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Longkun Shi · 史龙堃</title>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue: #003da5;
+      --blue-ink: #002d7a;
+      --ink: #1f2328;
+      --muted: #5f6772;
+      --quiet: #7b8491;
+      --line: #d8dde5;
+      --soft-line: #e9edf2;
+      --paper: #ffffff;
+      --wash: #f7f8fa;
+      --tag: #edf3ff;
+      --tag-border: #cbdaf7;
+      --radius: 6px;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      --serif: Georgia, "Times New Roman", "Songti SC", SimSun, serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background: #fff;
-      color: #1a1a1a;
-      line-height: 1.65;
-      font-size: 16px;
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 17px;
+      line-height: 1.45;
+      letter-spacing: 0;
     }
 
-    .page {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 52px 24px 80px;
-    }
-
-    /* ── LANG SWITCH ── */
-    .lang-bar {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 36px;
-      gap: 2px;
-    }
-
-    .lang-btn {
-      background: none;
-      border: 1px solid #d1d5db;
-      border-radius: 4px;
-      font-size: 12.5px;
-      font-weight: 600;
-      color: #888;
-      padding: 3px 10px;
-      cursor: pointer;
-      transition: all .12s;
-    }
-
-    .lang-btn.active {
-      background: #1a1a1a;
-      border-color: #1a1a1a;
-      color: #fff;
-    }
-
-    .lang-btn:not(.active):hover {
-      border-color: #999;
-      color: #444;
-    }
-
-    /* ── LANG VISIBILITY ── */
-    .en { display: block; }
-    .zh { display: none; }
-    body.zh-mode .en { display: none; }
-    body.zh-mode .zh { display: block; }
-
-    /* inline spans */
-    span.en, span.zh { display: inline; }
-    body.zh-mode span.en { display: none; }
-    body.zh-mode span.zh { display: inline; }
-
-    /* ── PROFILE ── */
-    .profile {
-      display: flex;
-      gap: 32px;
-      align-items: flex-start;
-      margin-bottom: 52px;
-    }
-
-    .avatar {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      flex-shrink: 0;
-      background: #f0f0f0;
-    }
-
-    .profile-info h1 {
-      font-size: 28px;
+    a {
+      color: var(--blue);
+      text-decoration: none;
       font-weight: 700;
-      line-height: 1.2;
     }
 
-    .sub-name { font-size: 18px; font-weight: 400; color: #888; margin-left: 8px; }
+    a:hover { text-decoration: underline; }
 
-    .affil {
-      margin-top: 6px;
-      font-size: 14px;
-      color: #555;
-      line-height: 1.55;
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 255, 255, .95);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(14px);
     }
 
-    .links {
-      margin-top: 14px;
+    .topbar-inner {
+      width: min(1240px, calc(100% - 42px));
+      height: 56px;
+      margin: 0 auto;
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+      align-items: stretch;
+      justify-content: space-between;
+      gap: 20px;
     }
 
-    .links a {
+    .nav {
+      display: flex;
+      align-items: stretch;
+      gap: 34px;
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .nav a {
+      position: relative;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      font-size: 13px;
-      color: #2563eb;
+      color: var(--ink);
       text-decoration: none;
-      border: 1px solid #bfdbfe;
-      border-radius: 5px;
-      padding: 4px 11px;
-      transition: background .12s;
-    }
-
-    .links a:hover { background: #eff6ff; }
-
-    /* ── SECTIONS ── */
-    section { margin-bottom: 44px; }
-
-    section h2 {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .1em;
-      color: #999;
-      margin-bottom: 18px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid #eee;
-    }
-
-    /* ── ABOUT ── */
-    .about p { font-size: 15px; color: #333; line-height: 1.75; }
-
-    /* ── PAPERS ── */
-    .paper {
-      display: flex;
-      gap: 14px;
-      margin-bottom: 28px;
-    }
-
-    .paper-badge {
-      flex-shrink: 0;
-      margin-top: 3px;
-      font-size: 11px;
-      font-weight: 700;
-      color: #fff;
-      background: #2563eb;
-      border-radius: 4px;
-      padding: 3px 9px;
-      height: fit-content;
       white-space: nowrap;
     }
 
-    .paper-badge.conf { background: #7c3aed; }
+    .nav a.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 3px;
+      background: var(--blue);
+    }
 
-    .paper-title { font-size: 15px; font-weight: 600; color: #111; line-height: 1.4; }
-    .paper-authors { font-size: 13.5px; color: #666; margin-top: 4px; }
-    .paper-authors strong { color: #1a1a1a; font-weight: 600; }
-    .paper-venue { font-size: 13px; color: #888; margin-top: 3px; }
-    .paper-venue .ccf { color: #dc2626; font-weight: 600; }
-
-    .paper-metrics {
-      margin-top: 7px;
+    .tools {
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--sans);
     }
 
-    .tag {
-      font-size: 12px;
-      padding: 2px 8px;
-      border-radius: 3px;
-      background: #f3f4f6;
-      color: #555;
+    .lang-bar {
+      display: inline-grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
     }
 
-    .tag.gold { background: #fef9c3; color: #854d0e; font-weight: 600; }
+    .lang-btn {
+      width: 46px;
+      min-height: 30px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      font: 800 12px/1 var(--sans);
+      cursor: pointer;
+    }
 
-    .paper-links { margin-top: 7px; display: flex; gap: 12px; }
-    .paper-links a { font-size: 12.5px; color: #2563eb; text-decoration: none; }
-    .paper-links a:hover { text-decoration: underline; }
+    .lang-btn.active {
+      background: var(--ink);
+      color: #fff;
+    }
 
-    /* ── AWARDS ── */
-    .award-row {
+    .en { display: block; }
+    .zh { display: none; }
+    span.en { display: inline; }
+    span.zh { display: none; }
+    body.zh-mode .en { display: none !important; }
+    body.zh-mode .zh { display: block !important; }
+    body.zh-mode span.zh { display: inline !important; }
+
+    .layout {
+      width: min(1180px, calc(100% - 42px));
+      margin: 0 auto;
+      padding: 32px 0 68px;
+      display: grid;
+      grid-template-columns: 240px minmax(0, 1fr);
+      gap: 64px;
+      align-items: start;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 86px;
+      font-family: var(--sans);
+      color: var(--ink);
+    }
+
+    .portrait {
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: 50% 18%;
+      display: block;
+      border: 1px solid var(--line);
+      background: var(--wash);
+      margin-bottom: 18px;
+    }
+
+    .profile-name {
+      font-size: 19px;
+      font-weight: 850;
+      line-height: 1.25;
+      margin: 0 0 10px;
+    }
+
+    .profile-role {
+      margin: 0 0 22px;
+      max-width: 220px;
+      font-size: 14px;
+      line-height: 1.5;
+      font-weight: 750;
+    }
+
+    .profile-list {
+      display: grid;
+      gap: 11px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: 14px;
+      font-weight: 760;
+    }
+
+    .profile-list li,
+    .profile-list a {
       display: flex;
       align-items: baseline;
-      gap: 14px;
-      padding: 9px 0;
-      border-bottom: 1px solid #f4f4f4;
+      gap: 10px;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .profile-list .mark {
+      width: 22px;
+      color: var(--quiet);
+      font-size: 13px;
+      font-family: var(--sans);
+      font-weight: 900;
+      text-align: center;
+      flex: 0 0 auto;
+    }
+
+    .main {
+      min-width: 0;
+      max-width: 900px;
+    }
+
+    section {
+      margin-bottom: 38px;
+      scroll-margin-top: 78px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-family: var(--serif);
+      font-size: 38px;
+      line-height: 1.15;
+      font-weight: 800;
+    }
+
+    .headline {
+      margin: 0 0 26px;
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 18px;
+      font-weight: 650;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--line);
+      color: var(--blue);
+      font-family: var(--serif);
+      font-size: 26px;
+      line-height: 1.15;
+      font-weight: 800;
+    }
+
+    p {
+      margin: 0 0 14px;
+      text-wrap: pretty;
+    }
+
+    strong { font-weight: 800; }
+
+    .dense-list {
+      margin: 0;
+      padding-left: 24px;
+      list-style-type: square;
+    }
+
+    .dense-list li { margin: 10px 0; }
+
+    .pub-toolbar {
+      margin: 14px 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-left: 3px solid var(--blue);
+      background: #fcf9f7;
+      color: var(--blue);
+      font-weight: 800;
+    }
+
+    .count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 26px;
+      height: 24px;
+      padding: 0 8px;
+      margin-left: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      font: 800 12px/1 var(--sans);
+    }
+
+    .pub-note {
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 18px;
+    }
+
+    .publication {
+      display: grid;
+      grid-template-columns: 320px minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+      padding: 14px 0 18px;
+      border-bottom: 1px solid var(--soft-line);
+    }
+
+    .publication:last-child { border-bottom: 0; }
+
+    .pub-thumb {
+      min-height: 164px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pub-thumb img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+    }
+
+    .pub-title {
+      margin: 0 0 6px;
+      font-size: 20px;
+      line-height: 1.2;
+      font-weight: 800;
+    }
+
+    .authors,
+    .venue {
+      margin: 0 0 6px;
+      font-size: 15px;
+      line-height: 1.35;
+    }
+
+    .venue { color: var(--muted); }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 8px;
+      font-family: var(--sans);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 10px;
+      border: 1px solid var(--tag-border);
+      border-radius: 999px;
+      background: var(--tag);
+      color: var(--blue-ink);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .pub-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+      margin-top: 8px;
+      font-family: var(--sans);
       font-size: 14px;
     }
 
-    .award-row:last-child { border-bottom: none; }
-    .award-date { width: 60px; flex-shrink: 0; font-size: 12.5px; color: #aaa; }
-    .award-name { flex: 1; color: #333; }
-    .award-level { font-size: 12.5px; font-weight: 600; color: #2563eb; white-space: nowrap; }
+    .awards {
+      display: grid;
+      gap: 10px;
+    }
 
-    /* ── EDUCATION ── */
-    .edu { display: flex; justify-content: space-between; align-items: flex-start; }
-    .edu-school { font-weight: 600; font-size: 15px; }
-    .edu-detail { font-size: 13.5px; color: #666; margin-top: 3px; }
-    .edu-year { font-size: 13px; color: #aaa; white-space: nowrap; }
+    .award {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr) 120px;
+      gap: 14px;
+      align-items: baseline;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--soft-line);
+    }
 
-    /* ── FOOTER ── */
-    footer { margin-top: 64px; text-align: center; font-size: 12px; color: #ccc; }
+    .date,
+    .level {
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 750;
+    }
 
-    @media (max-width: 520px) {
-      .profile { flex-direction: column; align-items: center; text-align: center; }
-      .links { justify-content: center; }
-      .paper { flex-direction: column; gap: 8px; }
-      .edu { flex-direction: column; gap: 4px; }
+    .level {
+      color: var(--blue);
+      text-align: right;
+    }
+
+    footer {
+      margin-top: 42px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--quiet);
+      font-family: var(--sans);
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .topbar-inner,
+      .layout { width: min(100% - 30px, 1180px); }
+      .nav { gap: 18px; }
+      .nav a:not(.active):not(.keep-mobile) { display: none; }
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 26px;
+        padding-top: 26px;
+      }
+      .sidebar {
+        position: static;
+        display: grid;
+        grid-template-columns: 88px minmax(0, 1fr);
+        gap: 16px;
+        align-items: start;
+      }
+      .portrait {
+        width: 88px;
+        height: 88px;
+        margin: 0;
+      }
+      .profile-list {
+        grid-column: 1 / -1;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .publication {
+        grid-template-columns: 1fr;
+      }
+      .pub-thumb { max-width: 440px; }
+      .award {
+        grid-template-columns: 1fr;
+        gap: 3px;
+      }
+      .level { text-align: left; }
+    }
+
+    @media (max-width: 560px) {
+      body { font-size: 16px; }
+      .topbar-inner { height: 58px; }
+      .nav { gap: 16px; font-size: 14px; }
+      .tools { gap: 6px; }
+      .lang-btn { width: 42px; }
+      .layout { width: min(100% - 24px, 1180px); }
+      h1 { font-size: 32px; }
+      h2 { font-size: 24px; }
+      .headline { font-size: 16px; }
+      .sidebar {
+        grid-template-columns: 74px minmax(0, 1fr);
+        gap: 14px;
+      }
+      .portrait {
+        width: 74px;
+        height: 74px;
+      }
+      .profile-name { font-size: 17px; }
+      .profile-role { font-size: 13px; margin-bottom: 10px; }
+      .profile-list { grid-template-columns: 1fr; }
+      .pub-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .pub-thumb { min-height: 132px; }
     }
   </style>
 </head>
 <body>
-<div class="page">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="active" href="#top">Longkun Shi</a>
+        <a class="keep-mobile" href="#publications"><span class="en">Publications</span><span class="zh">论文</span></a>
+        <a href="#awards"><span class="en">Awards</span><span class="zh">奖项</span></a>
+        <a href="#contact"><span class="en">Contact</span><span class="zh">联系</span></a>
+      </nav>
+      <div class="tools">
+        <div class="lang-bar" aria-label="Language switcher">
+          <button class="lang-btn active" id="btn-en" type="button" onclick="setLang('en')">EN</button>
+          <button class="lang-btn" id="btn-zh" type="button" onclick="setLang('zh')">中文</button>
+        </div>
+      </div>
+    </div>
+  </header>
 
-  <!-- LANG SWITCH -->
-  <div class="lang-bar">
-    <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
-    <button class="lang-btn" id="btn-zh" onclick="setLang('zh')">中文</button>
+  <div class="layout" id="top">
+    <aside class="sidebar" data-screen-label="Profile Sidebar">
+      <img class="portrait" src="assets/photo.jpg" alt="Longkun Shi portrait">
+      <div>
+        <p class="profile-name">
+          <span class="en">Longkun Shi</span>
+          <span class="zh">史龙堃</span>
+        </p>
+        <p class="profile-role">
+          <span class="en">B.Eng. Candidate at Xinjiang University.</span>
+          <span class="zh">新疆大学计算机科学与技术本科生。</span>
+        </p>
+      </div>
+      <ul class="profile-list" aria-label="Profile links">
+        <li>
+          <span class="mark">LOC</span>
+          <span><span class="en">Urumqi, China</span><span class="zh">中国乌鲁木齐</span></span>
+        </li>
+        <li>
+          <span class="mark">UNI</span>
+          <span><span class="en">Xinjiang University</span><span class="zh">新疆大学</span></span>
+        </li>
+        <li>
+          <a href="mailto:18203913583@163.com"><span class="mark">EM</span><span>Email</span></a>
+        </li>
+        <li>
+          <a href="assets/resume.pdf" target="_blank" rel="noreferrer"><span class="mark">CV</span><span><span class="en">Curriculum Vitae</span><span class="zh">个人简历</span></span></a>
+        </li>
+        <li>
+          <a href="https://github.com/deafenken" target="_blank" rel="noreferrer"><span class="mark">GH</span><span>GitHub</span></a>
+        </li>
+        <li>
+          <a href="https://github.com/deafenken/UAPA-HCF" target="_blank" rel="noreferrer"><span class="mark">CD</span><span>UAPA-HCF</span></a>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <section aria-labelledby="name-heading" data-screen-label="About">
+        <h1 id="name-heading">
+          <span class="en">Longkun Shi</span>
+          <span class="zh">史龙堃 <span class="en">Longkun Shi</span></span>
+        </h1>
+        <p class="headline">
+          <span class="en">Weakly supervised video anomaly detection · multimodal video understanding</span>
+          <span class="zh">弱监督视频异常检测 · 多模态视频理解</span>
+        </p>
+
+        <h2><span class="en">About Me</span><span class="zh">关于我</span></h2>
+        <p class="en">
+          I am a third-year undergraduate student in the School of Computer Science and Technology at
+          <strong>Xinjiang University</strong>, ranked <strong>9 / 120</strong> in my major and
+          <strong>2 / 120</strong> in overall assessment, with a GPA of <strong>4.12 / 5.0</strong>.
+        </p>
+        <p class="zh">
+          我是<strong>新疆大学计算机科学与技术学院</strong> 2027 届本科生，专业排名
+          <strong>9 / 120</strong>，综合测评排名 <strong>2 / 120</strong>，GPA 为
+          <strong>4.12 / 5.0</strong>。
+        </p>
+        <p class="en">
+          My research focuses on weakly supervised video anomaly detection and multimodal video understanding.
+          I study how to align heterogeneous modalities such as RGB, audio, and optical flow under coarse video-level
+          supervision, so that each modality can correct or strengthen the others when frame-level labels are unavailable.
+        </p>
+        <p class="zh">
+          我的研究方向是弱监督视频异常检测与多模态视频理解，关注在粗粒度视频级监督下，如何对齐 RGB、
+          音频、光流等异构模态，使不同模态在缺少帧级标注时互相校正并增强判断。
+        </p>
+        <p class="en">
+          I am actively seeking graduate opportunities for Fall 2026, especially in groups working on video understanding,
+          multimodal learning, and reliable visual intelligence.
+        </p>
+        <p class="zh">
+          目前我正在积极寻求 2026 年秋季研究生阶段机会，尤其关注视频理解、多模态学习与可靠视觉智能方向。
+        </p>
+      </section>
+
+      <section id="education" data-screen-label="Education">
+        <h2><span class="en">Education</span><span class="zh">教育经历</span></h2>
+        <ul class="dense-list">
+          <li>
+            <span class="en">[2023-2027] B.Eng. in Computer Science and Technology, Xinjiang University.</span>
+            <span class="zh">[2023-2027] 新疆大学，计算机科学与技术，工学学士在读。</span>
+          </li>
+          <li>
+            <span class="en">GPA 4.12 / 5.0; Major Rank 9 / 120; Overall Assessment Rank 2 / 120.</span>
+            <span class="zh">GPA 4.12 / 5.0；专业排名 9 / 120；综合测评排名 2 / 120。</span>
+          </li>
+        </ul>
+      </section>
+
+      <section id="publications" data-screen-label="Publications">
+        <h2><span class="en">Publications</span><span class="zh">论文</span></h2>
+        <div class="pub-toolbar">
+          <span><span class="en">Selected Publications & Manuscripts</span><span class="zh">代表性论文与研究工作</span><span class="count">2</span></span>
+        </div>
+        <p class="pub-note">
+          <span class="en">* indicates primary contribution when applicable. Full materials are linked when available.</span>
+          <span class="zh">如有可公开材料，已在条目中附上论文、代码或 PDF 链接。</span>
+        </p>
+
+        <article class="publication">
+          <div class="pub-thumb">
+            <img src="assets/uapa-hcf-framework.png" alt="Overview of the UAPA-HCF framework">
+          </div>
+          <div>
+            <h3 class="pub-title">
+              <span class="en">Rectifying Multimodal Variance: UAPA-HCF for Weakly Supervised Violence Detection</span>
+              <span class="zh">修正多模态方差：基于 UAPA-HCF 的弱监督视频暴力检测</span>
+            </h3>
+            <p class="authors"><strong>Longkun Shi</strong>, Hanlin Hu, Haoze Zheng, Yuanyuan Liao, Turdi Tohti.</p>
+            <p class="venue">
+              <span class="en"><em>ACM International Conference on Multimedia Retrieval</em>, Amsterdam, Jun 2026.</span>
+              <span class="zh"><em>ACM 国际多媒体检索大会（ICMR '26）</em>，阿姆斯特丹，2026 年 6 月。</span>
+            </p>
+            <div class="badges">
+              <span class="badge">ICMR 2026</span>
+              <span class="badge">CCF-B</span>
+              <span class="badge">87.65% AP · XD-Violence</span>
+            </div>
+            <div class="pub-links">
+              <a href="https://doi.org/10.1145/3805622.3810882" target="_blank" rel="noreferrer">DOI</a>
+              <a href="assets/icmr26-325.pdf" target="_blank" rel="noreferrer">PDF</a>
+              <a href="https://github.com/deafenken/UAPA-HCF" target="_blank" rel="noreferrer"><span class="en">Code</span><span class="zh">代码</span></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="publication">
+          <div class="pub-thumb">
+            <img src="assets/jain-mf-overview.png" alt="Overview of the JAIN-MF method">
+          </div>
+          <div>
+            <h3 class="pub-title">
+              <span class="en">JAIN-MF: Multi-Modal Action Recognition via Skeleton-Guided Sparse Subspace Alignment</span>
+              <span class="zh">JAIN-MF：基于骨架引导稀疏子空间对齐的多模态动作识别</span>
+            </h3>
+            <p class="authors"><strong>Longkun Shi</strong>, et al.</p>
+            <p class="venue">
+              <span class="en"><em>Xinjiang Computer Conference (CXCC)</em>, 2026.</span>
+              <span class="zh"><em>新疆计算机大会（CXCC）</em>，2026。</span>
+            </p>
+            <div class="badges">
+              <span class="badge">CXCC 2026</span>
+              <span class="badge">91.4% Top-1 · NTU RGB+D 120</span>
+              <span class="badge">Action Recognition</span>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section id="awards" data-screen-label="Awards">
+        <h2><span class="en">Selected Awards</span><span class="zh">代表性奖项</span></h2>
+        <div class="awards">
+          <div class="award">
+            <span class="date">2025-08</span>
+            <span>
+              <span class="en">China Collegiate Computing Competition, AI Practice Track.</span>
+              <span class="zh">中国大学生计算机大赛 · 人工智能创新赛。</span>
+            </span>
+            <span class="level"><span class="en">National 3rd</span><span class="zh">全国三等奖</span></span>
+          </div>
+          <div class="award">
+            <span class="date">2025-03</span>
+            <span>
+              <span class="en">Huawei ICT Competition, China National Final.</span>
+              <span class="zh">华为 ICT 大赛 · 中国区总决赛。</span>
+            </span>
+            <span class="level"><span class="en">National 2nd</span><span class="zh">全国二等奖</span></span>
+          </div>
+          <div class="award">
+            <span class="date">2024-10</span>
+            <span>
+              <span class="en">China International College Students' Innovation Competition.</span>
+              <span class="zh">中国国际大学生创新大赛。</span>
+            </span>
+            <span class="level"><span class="en">National Bronze</span><span class="zh">全国铜奖</span></span>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" data-screen-label="Contact">
+        <h2><span class="en">Contact Me</span><span class="zh">联系我</span></h2>
+        <p class="en">
+          I welcome discussions about video anomaly detection, multimodal learning, and graduate research opportunities.
+          My preferred email is <a href="mailto:18203913583@163.com">18203913583@163.com</a>.
+        </p>
+        <p class="zh">
+          欢迎就视频异常检测、多模态学习与研究生阶段机会交流。我的常用邮箱是
+          <a href="mailto:18203913583@163.com">18203913583@163.com</a>。
+        </p>
+      </section>
+
+      <footer>
+        <span class="en">Last updated June 2026 · Longkun Shi</span>
+        <span class="zh">最后更新：2026 年 6 月 · 史龙堃</span>
+      </footer>
+    </main>
   </div>
 
-  <!-- PROFILE -->
-  <div class="profile">
-    <img class="avatar" src="assets/photo.jpg" alt="Longkun Shi"
-         onerror="this.style.background='#e5e7eb'">
-    <div class="profile-info">
-      <h1>
-        <span class="en">Longkun Shi</span>
-        <span class="zh">史龙堃 <span class="sub-name">Longkun Shi</span></span>
-      </h1>
-      <p class="affil">
-        <span class="en">B.Eng. Candidate &nbsp;·&nbsp; School of Computer Science and Technology<br>Xinjiang University &nbsp;·&nbsp; Urumqi, China</span>
-        <span class="zh">本科生 &nbsp;·&nbsp; 计算机科学与技术学院<br>新疆大学 &nbsp;·&nbsp; 新疆乌鲁木齐</span>
-      </p>
-      <div class="links">
-        <a href="mailto:18203913583@163.com">
-          <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
-            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
-          </svg>
-          Email
-        </a>
-        <a href="https://github.com/deafenken" target="_blank">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-          </svg>
-          GitHub
-        </a>
-        <a href="https://github.com/deafenken/UAPA-HCF" target="_blank">
-          <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/>
-          </svg>
-          UAPA-HCF Code
-        </a>
-      </div>
-    </div>
-  </div>
+  <script>
+    function setLang(lang) {
+      document.body.classList.toggle('zh-mode', lang === 'zh');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+      document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+      try { localStorage.setItem('lang', lang); } catch (error) {}
+    }
 
-  <!-- ABOUT -->
-  <section class="about">
-    <h2><span class="en">About</span><span class="zh">关于</span></h2>
-    <p class="en">
-      I am a third-year undergraduate at Xinjiang University (Class of 2027), ranked 9<sup>th</sup> out of 120
-      in my major (GPA 4.12/5.0) and 2<sup>nd</sup> out of 120 in overall assessment. My research centers on
-      <strong>weakly supervised video anomaly detection</strong> and <strong>multimodal video understanding</strong>
-      — specifically how to align heterogeneous modalities (RGB, audio, optical flow) under coarse video-level
-      supervision. I am actively seeking graduate opportunities for Fall 2026.
-    </p>
-    <p class="zh">
-      我是新疆大学计算机科学与技术学院 2027 届本科生，专业排名 9/120（前 7.5%），综合测评排名 2/120，GPA 4.12/5.0。
-      研究方向为<strong>弱监督视频异常检测</strong>与<strong>多模态视频理解</strong>，专注于在粗粒度视频级监督下
-      对齐异构模态（RGB、音频、光流）。目前正积极寻求 2026 年秋季的攻读研究生机会。
-    </p>
-  </section>
-
-  <!-- PUBLICATIONS -->
-  <section>
-    <h2><span class="en">Publications</span><span class="zh">论文</span></h2>
-
-    <!-- ICMR -->
-    <div class="paper">
-      <span class="paper-badge">ICMR '26</span>
-      <div>
-        <div class="paper-title">
-          <span class="en">Rectifying Multimodal Variance: UAPA-HCF for Weakly Supervised Violence Detection</span>
-          <span class="zh">修正多模态方差：基于 UAPA-HCF 的弱监督视频暴力检测</span>
-        </div>
-        <div class="paper-authors">
-          <strong>Longkun Shi</strong>, Hanlin Hu, Haoze Zheng, Yuanyuan Liao, Turdi Tohti
-        </div>
-        <div class="paper-venue">
-          <span class="en"><em>ACM International Conference on Multimedia Retrieval</em>, Amsterdam, Jun 2026 &nbsp;·&nbsp; <span class="ccf">CCF-B</span></span>
-          <span class="zh"><em>ACM 国际多媒体检索大会（ICMR '26）</em>，阿姆斯特丹 &nbsp;·&nbsp; <span class="ccf">CCF-B</span></span>
-        </div>
-        <div class="paper-metrics">
-          <span class="tag gold">87.65% AP · XD-Violence</span>
-          <span class="tag"><span class="en">Weakly Supervised</span><span class="zh">弱监督</span></span>
-          <span class="tag">RGB + Audio + Optical Flow</span>
-        </div>
-        <div class="paper-links">
-          <a href="https://doi.org/10.1145/3805622.3810882">DOI</a>
-          <a href="https://github.com/deafenken/UAPA-HCF"><span class="en">Code</span><span class="zh">代码</span></a>
-        </div>
-      </div>
-    </div>
-
-    <!-- CXCC -->
-    <div class="paper">
-      <span class="paper-badge conf">CXCC '25</span>
-      <div>
-        <div class="paper-title">
-          <span class="en">JAIN-MF: Multi-Modal Action Recognition via Skeleton-Guided Sparse Subspace Alignment</span>
-          <span class="zh">JAIN-MF：基于骨架引导稀疏子空间对齐的多模态动作识别</span>
-        </div>
-        <div class="paper-authors"><strong>Longkun Shi</strong>, et al.</div>
-        <div class="paper-venue">
-          <span class="en"><em>Xinjiang Computer Conference (CXCC)</em>, 2025</span>
-          <span class="zh"><em>新疆计算机大会（CXCC）</em>，2025</span>
-        </div>
-        <div class="paper-metrics">
-          <span class="tag gold">91.4% Top-1 · NTU RGB+D 120</span>
-          <span class="tag"><span class="en">Action Recognition</span><span class="zh">动作识别</span></span>
-          <span class="tag">Skeleton + RGB + Optical Flow</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- AWARDS -->
-  <section>
-    <h2><span class="en">Selected Awards</span><span class="zh">获奖情况</span></h2>
-    <div class="award-row">
-      <span class="award-date">2025-08</span>
-      <span class="award-name">
-        <span class="en">China Collegiate Computing Competition — AI Practice Track</span>
-        <span class="zh">中国大学生计算机大赛·人工智能创新赛</span>
-      </span>
-      <span class="award-level"><span class="en">National 3rd Prize</span><span class="zh">全国三等奖</span></span>
-    </div>
-    <div class="award-row">
-      <span class="award-date">2025-03</span>
-      <span class="award-name">
-        <span class="en">Huawei ICT Competition · China National Final (9th)</span>
-        <span class="zh">华为 ICT 大赛·中国区总决赛（第九届）</span>
-      </span>
-      <span class="award-level"><span class="en">National 2nd Prize</span><span class="zh">全国二等奖</span></span>
-    </div>
-    <div class="award-row">
-      <span class="award-date">2024-10</span>
-      <span class="award-name">
-        <span class="en">China International College Students' Innovation Competition</span>
-        <span class="zh">中国国际大学生创新大赛</span>
-      </span>
-      <span class="award-level"><span class="en">National Bronze</span><span class="zh">全国铜奖</span></span>
-    </div>
-  </section>
-
-  <!-- EDUCATION -->
-  <section>
-    <h2><span class="en">Education</span><span class="zh">教育经历</span></h2>
-    <div class="edu">
-      <div>
-        <div class="edu-school">
-          <span class="en">Xinjiang University</span>
-          <span class="zh">新疆大学</span>
-        </div>
-        <div class="edu-detail">
-          <span class="en">B.Eng. Computer Science and Technology &nbsp;·&nbsp; GPA 4.12 / 5.0 &nbsp;·&nbsp; Major Rank 9 / 120 &nbsp;·&nbsp; Overall Rank 2 / 120</span>
-          <span class="zh">计算机科学与技术 &nbsp;·&nbsp; GPA 4.12 / 5.0 &nbsp;·&nbsp; 专业排名 9 / 120 &nbsp;·&nbsp; 综测排名 2 / 120</span>
-        </div>
-      </div>
-      <div class="edu-year">
-        <span class="en">Sep 2023 – Jun 2027</span>
-        <span class="zh">2023.09 — 2027.06</span>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <span class="en">Last updated May 2026</span>
-    <span class="zh">最后更新：2026 年 5 月</span>
-  </footer>
-
-</div>
-
-<script>
-  function setLang(lang) {
-    document.body.classList.toggle('zh-mode', lang === 'zh');
-    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-    document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
-    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-    try { localStorage.setItem('lang', lang); } catch(e) {}
-  }
-  try {
-    const saved = localStorage.getItem('lang');
-    if (saved === 'zh') setLang('zh');
-  } catch(e) {}
-</script>
+    try {
+      const savedLang = localStorage.getItem('lang');
+      if (savedLang === 'zh') setLang('zh');
+    } catch (error) {}
+  </script>
 </body>
 </html>
