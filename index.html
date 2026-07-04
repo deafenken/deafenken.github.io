@@ -392,6 +392,18 @@
       text-align: right;
     }
 
+    .award-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 7px;
+    }
+
+    .award.is-top .level {
+      color: var(--blue-ink);
+      font-weight: 850;
+    }
+
     footer {
       margin-top: 42px;
       padding-top: 18px;
@@ -640,6 +652,17 @@
       <section id="awards" data-screen-label="Awards">
         <h2><span class="en">Selected Awards</span><span class="zh">代表性奖项</span></h2>
         <div class="awards">
+          <div class="award is-top">
+            <span class="date">2026-07</span>
+            <span>
+              <span class="en">NLPCC 2026 Shared Task 10: Reliability of AI-Assisted Scientific Reporting (Overall Track 1 + 2), Team XJDX_001 · Xinjiang University.</span>
+              <span class="zh">NLPCC 2026 评测任务十：AI 辅助科学报告可靠性评测（Track 1 + 2 总榜），XJDX_001 队 · 新疆大学。</span>
+              <span class="award-tags">
+                <span class="badge">CCF-NLP</span>
+              </span>
+            </span>
+            <span class="level"><span class="en">Champion</span><span class="zh">总冠军</span></span>
+          </div>
           <div class="award">
             <span class="date">2025-08</span>
             <span>
@@ -680,8 +703,8 @@
       </section>
 
       <footer>
-        <span class="en">Last updated June 2026 · Longkun Shi</span>
-        <span class="zh">最后更新：2026 年 6 月 · 史龙堃</span>
+        <span class="en">Last updated July 2026 · Longkun Shi</span>
+        <span class="zh">最后更新：2026 年 7 月 · 史龙堃</span>
       </footer>
     </main>
   </div>
